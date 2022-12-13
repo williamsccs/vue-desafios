@@ -1,0 +1,25 @@
+Formulario
+
+4 inputs con validaciones
+una vez validados tienen que pasar a un JSON
+
+Luego pasarlos a una tabla reactiva que debe estar debajo del formulario
+
+la tabla debe tener filtros de vista
+se debe poder vacia vaciar el formulario
+
+Campos para el Formulario
+
+- Nombre y apellido
+- DNI
+- Correo
+- Sexo
+
+Campos para la tabla
+
+- Nombre y apellido
+- DNI
+- Correo 
+- Sexo
+- Juego Favorito
+- Pais de nacimiento
