@@ -12,94 +12,41 @@
                     <label for="inputNombre" class="text-start">Tu nombre</label>
                     <input v-model="nombre" @keyup.space="contar" type="text" class="form-control" id="inputNombre"
                         placeholder="Nombre completo">
-                    <p>Validar nombre: <span class="text-success fw-bold">{{ nombre }}</span></p>
+
                     <br>
                     <!-- edad -->
-                    <label for="inputEdad" class="form-label text-start">DNI</label>
-                    <input v-model.number="edad" type="number" class="form-control" id="inputEdad" placeholder="DNI">
-                    <p>Validar edad: <span class="text-success fw-bold">{{ edad }}</span></p>
+                    <label for="inputDNI" class="form-label text-start">DNI</label>
+                    <input v-model.number="dni" type="number" class="form-control" id="inputDNI" placeholder="DNI">
+
                     <br>
                     <!-- email -->
                     <label for="inputEmail" class="form-label text-start">Email</label>
                     <input v-model="email" type="email" class="form-control" id="inputEmail" placeholder="tu@email.com">
-                    <p>Validar email:<span class="text-success fw-bold">{{ email }}</span></p>
+
                     <br>
-                    <!-- Cursos checkboxes  -->
-                    <!-- <div class="row">
-                        <h4>Selecciona tu Sexo</h4>
-                        <div class="col col-2">
-                            <div class="form-check">
-                                <input v-model="cursos" class="form-check-input" type="checkbox" value="javascript"
-                                    id="checkJS">
-                                <label class="form-check-label" for="checkJS">
-                                    Hombre
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input v-model="cursos" class="form-check-input" type="checkbox" value="react"
-                                    id="checkReact">
-                                <label class="form-check-label" for="checkReact">
-                                    Mujer
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input v-model="cursos" class="form-check-input" type="checkbox" value="angular"
-                                    id="checkNg">
-                                <label class="form-check-label text-start" for="checkNg">
-                                    Otro
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input v-model="cursos" class="form-check-input" type="checkbox" value="vue"
-                                    id="checkVue">
-                                <label class="form-check-label" for="checkVue">
-                                    Vue
-                                </label>
-                            </div>
-                        </div>
-                        <p>Validar cursos seleccionados:<span class="text-success fw-bold">{{ cursos }}</span></p>
-                    </div> -->
-                    <br>
-                    <!-- selector de pais -->
-                    <!-- <label for="selector">Elige tu país</label>
-                    <select v-model="pais" name="selector" class="form-select" aria-label="Default select example">
-                        <option selected></option>
-                        <option value="colombia">Colombia</option>
-                        <option value="chile">Chile</option>
-                        <option value="argentina">Argentina</option>
-                    </select>
-                    <p>Validar pais:<span class="text-success fw-bold">{{ pais }}</span></p> -->
-                    <!-- comentarios -->
-                    <!-- <label for="areaComentarios" class="form-label text-start">Comentarios</label>
-                    <textarea v-model.trim="comentarios" class="form-control" id="areaComentarios" rows="3"></textarea>
-                    <p>Validar comentario:<span class="text-success fw-bold">{{ comentarios }}</span></p>
-                    <br> -->
                     <!-- Documentos radio -->
                     <div class="row">
                         <h4>Selecciona tu Sexo</h4>
                         <div class="col">
-                            <input v-model="documento" type="radio" name="checkDNI" class="form-check-input"
-                                value="DNI">
+                            <input v-model="sexo" type="radio" name="checkHombre" class="form-check-input"
+                                value="Hombre">
                             <label for="checkDNI">Hombre</label>
                         </div>
                         <div class="col">
-                            <input v-model="documento" type="radio" name="checkPass" class="form-check-input"
-                                value="Pasaporte">
+                            <input v-model="sexo" type="radio" name="checkMujer" class="form-check-input" value="Mujer">
                             <label for="checkPass">Mujer</label>
                         </div>
                         <div class="col">
-                            <input v-model="documento" type="radio" name="checkVisa" class="form-check-input"
-                                value="Visa">
+                            <input v-model="sexo" type="radio" name="checkOtro" class="form-check-input" value="otro">
                             <label for="checkVisa">Otro</label>
                         </div>
                         <br>
                         <!-- email -->
-                        <label for="inputEmail" class="form-label text-start">Otro</label>
-                        <input v-model="email" type="email" class="form-control" id="inputEmail"
-                            placeholder="como te identificas">
+                        <label for="inputOtro" class="form-label text-start">Otro</label>
+                        <input v-model="sexo" type="text" class="form-control" id="inputOtro"
+                            placeholder="como te identificas" :disabled="disabled">
 
                         <br>
-                        <p>Validar documento:<span class="text-success fw-bold">{{ documento }}</span></p>
                     </div>
                     <hr>
                     <div class="row">
@@ -119,23 +66,18 @@
 </template>
   
 <script>
+
+
 export default {
     name: 'FormularioVue',
     data() {
         return {
-            nombre:'',
-            dni:'',
-            email:'',
-            sexo:'',
-
-            // comentar todo esto deaqui hasta contador
-            //nombre: '',
-            edad: null,
-            //email: '',
-            cursos: [],
-            pais: '',
-            comentarios: '',
-            documento: '',
+            nombre: '',
+            dni: '',
+            email: '',
+            sexo: '',
+            usuarios: {},
+            disabled: true,
             errores: [],
             contador: 1
         };
@@ -143,14 +85,24 @@ export default {
     methods: {
         validarFormulario() {
             //event.preventDefault();
-            if (this.nombre && this.contador > 1 && this.edad && this.email) {
+            if (this.nombre && this.contador > 1 && this.dni && this.email && this.sexo) {
                 alert("Campos obligatorios están ok, enviando formulario!");
+
+                this.usuarios = { nombre: this.nombre, dni: this.dni, email: this.email, sexo: this.sexo }
+                this.enviar()
+
+
                 setTimeout(() => {
                     //reset del formulario
                     document.getElementById("formulario").reset();
                     //vuelvo todas las variables a estado inicial
-                    Object.assign(this.$data, this.$options.data());
+                    // Object.assign(this.$data.dni, this.$options.data());
+                    this.nombre = ""
+                    this.dni = ""
+                    this.email = ""
+                    this.sexo = ""
                 }, 3000);
+                console.log(JSON.stringify(this.usuarios))
                 return true;
             }
             if (!this.nombre) {
@@ -159,11 +111,14 @@ export default {
             if (this.contador < 2) {
                 this.errores.push("El nombre debe estar compuesto por nombre y apellido! ")
             }
-            if (!this.edad) {
-                this.errores.push("La edad es campo obligatorio. ");
+            if (!this.dni) {
+                this.errores.push("el DNI es campo obligatorio. ");
             }
             if (!this.email) {
                 this.errores.push("El email es obligatorio. ");
+            }
+            if (!this.sexo) {
+                this.errores.push("El Genero es obligatorio. ");
             }
             setTimeout(() => {
                 this.errores = [];
@@ -172,15 +127,34 @@ export default {
         contar() {
             console.log("Agregando otro nombre");
             this.contador++;
+        },
+        enviar() {
+            this.$emit("enviar", this.usuarios);
         }
     },
     computed: {
         mostrarErrores() {
             let misErrores = this.errores.join(" ");
             return misErrores;
+        },
+        isDisabled() {
+            return this.form.validated;
         }
 
     },
+    watch: {
+        sexo(sexo) {
+            if (sexo === "otro") {
+                this.disabled = false
+
+            }
+            if (sexo === "Hombre" || sexo === "Mujer") {
+                this.disabled = true
+            }
+
+
+        }
+    }
 
 }
 </script>

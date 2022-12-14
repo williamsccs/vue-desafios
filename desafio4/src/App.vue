@@ -1,11 +1,9 @@
 <template>
   <div id="app">
-    <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-    <FormularioVue></FormularioVue>
-    <TablaFormulario></TablaFormulario>
+    <FormularioVue :usuarios="usuarios" @enviar="usuariosRecibidos.push($event)"></FormularioVue>
+    <TablaFormulario :usuarios="usuariosRecibidos"></TablaFormulario>
   </div>
 </template>
-
 <script>
 
 import FormularioVue from './components/FormularioVue.vue';
@@ -13,6 +11,11 @@ import TablaFormulario from './components/TablaFormulario.vue';
 
 export default {
   name: 'App',
+  data() {
+    return {
+      usuariosRecibidos: []
+    }
+  },
   components: {
     FormularioVue,
     TablaFormulario,
